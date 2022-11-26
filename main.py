@@ -13,8 +13,6 @@ state_storage=state_storage)
 
 class MyStates(StatesGroup):
     name = State() 
-    middlename = State()
-    lastname = State()
     department = State()
     acadamicyear = State()
     phoneno = State()
@@ -26,7 +24,7 @@ def start_ex(message):
     Start command. Here we are starting state
     """
     bot.set_state(message.from_user.id, MyStates.name, message.chat.id)
-    bot.send_message(message.chat.id, 'first Name')
+    bot.send_message(message.chat.id, 'enter full Name')
     
 
     
@@ -40,33 +38,14 @@ def any_state(message):
     bot.send_message(message.chat.id, "Your state was cancelled.")
     bot.delete_state(message.from_user.id, message.chat.id)
 
-@bot.message_handler(state=MyStates.name)
-def name_get(message):
-    """
-    State 1. Will process when user's state is MyStates.name.
-    """
-    bot.send_message(message.chat.id, 'Middle name')
-    bot.set_state(message.from_user.id, MyStates.middlename, message.chat.id)
-    with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
-        data['name'] = message.text
- 
-@bot.message_handler(state=MyStates.middlename)
-def lname_get(message):
-    """
-    State 1. Will process when user's state is MyStates.name.
-    """
-    bot.send_message(message.chat.id, 'Last name')
-    bot.set_state(message.from_user.id, MyStates.lastname, message.chat.id)
-    with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
-        data['middlename'] = message.text
 
  
-@bot.message_handler(state=MyStates.lastname)
+@bot.message_handler(state=MyStates.name)
 def ask_department(message):
     bot.send_message(message.chat.id, "What is your Department?")
     bot.set_state(message.from_user.id, MyStates.department, message.chat.id)
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
-        data['lastname'] = message.text
+        data['name'] = message.text
 def menub():
     markup = InlineKeyboardMarkup()
     markup.width =1
@@ -101,8 +80,6 @@ def ready_for_answer(message):
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         msg = ("Congratulations! you are now member of the club. We will contact you soon. Thank you!\n<b>"
                f"Name: {data['name']}\n"
-               f"Middlename: {data['middlename']}\n"
-               f"Lastname: {data['lastname']}\n"
                f"Department: {data['department']}\n"
                f"Acadamic year: {data['acadamicyear']}\n"
                f"Phone number: {message.text}</b>")
