@@ -42,7 +42,7 @@ def any_state(message):
  
 @bot.message_handler(state=MyStates.name)
 def ask_department(message):
-    bot.send_message(message.chat.id, "What is your Department?")
+    bot.send_message(message.chat.id, "Department?")
     bot.set_state(message.from_user.id, MyStates.department, message.chat.id)
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['name'] = message.text
