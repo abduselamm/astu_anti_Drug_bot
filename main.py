@@ -82,7 +82,8 @@ def ready_for_answer(message):
                f"Name: {data['name']}\n"
                f"Department: {data['department']}\n"
                f"Acadamic year: {data['acadamicyear']}\n"
-               f"Phone number: {message.text}</b>")
+               f"Phone number: {message.text}</b>"
+               "for any information and notification join our telegram channel \n via https://t.me/+by2a0EjSug9iOGU8 ")
         bot.send_message(message.chat.id, msg, parse_mode="html")
         bot.send_message(736179579,msg,parse_mode="html")
     bot.delete_state(message.from_user.id, message.chat.id)
